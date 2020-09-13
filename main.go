@@ -8,6 +8,7 @@ import (
 
 	jwt "github.com/appleboy/gin-jwt/v2"
 	"github.com/davecgh/go-spew/spew"
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 )
 
@@ -17,6 +18,11 @@ func init() {
 
 func main() {
 	r := gin.Default()
+	cDefault := cors.DefaultConfig()
+	cDefault.AllowAllOrigins = true
+	cDefault.AllowCredentials = true
+
+	r.Use(cors.New(cDefault))
 
 	middleJWT, err := jwt.New(&jwt.GinJWTMiddleware{
 		Realm:       "test zone",
